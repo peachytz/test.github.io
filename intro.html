@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clarifying Gen AI</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;700&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f8f8f8;
+            background-size: cover;
+            font-family: 'Cinzel', serif;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container {
+            color: rgba(0, 0, 0, 0.7);
+            position: relative;
+            z-index: 2;
+        }
+
+        h1 {
+            font-size: 7rem;
+            font-weight: 200;
+            letter-spacing: 2px;
+            color: rgba(0, 0, 0, 0.8);
+            font-family: 'Cinzel', serif;
+            position: relative;
+            z-index: 2;
+        }
+
+        .subheading {
+            font-size: 2rem;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 300;
+            text-transform: uppercase;
+            position: relative;
+            z-index: 4;
+            margin-bottom: -50px;
+        }
+
+        .start-button {
+            font-size: 1rem;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: rgba(0, 0, 0, 0.5);
+            text-decoration: none;
+            border-bottom: 2px solid rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+            display: inline-block;
+            margin-top: 20px;
+            position: relative;
+            z-index: 4;
+        }
+
+        .start-button:hover {
+            color: rgba(0, 0, 0, 0.8);
+            border-bottom: 2px solid rgba(0, 0, 0, 0.8);
+        }
+
+        .cloud-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+
+        .cloud {
+            position: absolute;
+            width: 50%;
+        }
+
+        .cloud1 { top: 10%; left: 5%; transform: scale(1.7); opacity: 0.65; }
+        .cloud2 { top: 15%; right: 5%; transform: scale(1.7); opacity: 0.6; }
+        .cloud3 { bottom: 7%; left: 10%; transform: scale(1.4); opacity: 0.5; z-index: 3; }
+        .cloud4 { bottom: 5%; right: 10%; transform: scale(1.3); opacity: 0.4; z-index: 3; }
+
+        /* Fade-out animation */
+        .fade-out {
+            animation: fadeOut 0.5s ease forwards;
+        }
+
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="cloud-container">
+        <img src="cloud.png" class="cloud cloud1">
+        <img src="cloud.png" class="cloud cloud2">
+        <img src="cloud.png" class="cloud cloud3">
+        <img src="cloud.png" class="cloud cloud4">
+    </div>
+    <div class="container">
+        <div class="subheading">Clarifying</div>
+        <h1>Gen AI</h1>
+        <a href="allmodulesone.html" class="start-button">Start</a>
+    </div>
+
+    <script>
+        // Add an event listener to the "Start" button
+        document.querySelector('.start-button').addEventListener('click', function (event) {
+            event.preventDefault(); // Prevent immediate navigation
+            document.body.classList.add('fade-out'); // Add fade-out animation
+
+            // Navigate to allmodulesone.html after the animation completes
+            setTimeout(function () {
+                window.location.href = 'allmodulesone.html';
+            }, 500); // Match the duration of the fade-out animation (0.5s)
+        });
+    </script>
+</body>
+</html>

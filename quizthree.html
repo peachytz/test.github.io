@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mystery 3 - Match the Cards</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0; /* Light grey background */
+        }
+
+        .container {
+            width: 960px; /* Fixed width */
+            height: 540px; /* Fixed height */
+            padding: 20px;
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 2em;
+            margin-bottom: 5px;
+        }
+
+        h2 {
+            font-size: 1em;
+            margin-bottom: 20px;
+        }
+
+        .card-row {
+            display: flex;
+            justify-content: center;
+            gap: 20px; /* Space between cards */
+            margin-bottom: 20px; /* Space between feature and function rows */
+        }
+
+        .card {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+            border-radius: 5px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            width: 120px; /* Adjusted width to match image ratio */
+            height: 150px; /* Fixed card height */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card img {
+            width: 100%; /* Image fills the card */
+            height: auto;
+            display: block;
+        }
+
+        .card.features {
+            background-color: #fce4ec; /* Light pink for features */
+        }
+
+        .card.function {
+            background-color: #e0f7fa; /* Light blue for function */
+        }
+
+        .text-container {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .notification {
+            display: none;
+            color: red;
+            font-weight: bold;
+            margin-top: 0px;
+        }
+
+        .success {
+            display: none;
+            color: green;
+            font-weight: bold;
+            margin-top: 0px;
+        }
+
+        .congratulations {
+            display: none;
+            font-size: 1rem;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: rgba(0, 0, 0, 0.5);
+            text-decoration: none;
+            cursor: pointer;
+            margin-top: 0px;
+            position: relative;
+        }
+
+        .congratulations a:hover {
+            color: rgba(0, 0, 0, 0.8);
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>MYSTERY 3</h1>
+        <h2>match the cards</h2>
+
+        <!-- Feature Cards Row -->
+        <div class="card-row">
+            <div class="card features" data-feature="feature1">
+                <img src="features1.png" alt="Features Card 1">
+                <div class="text-container" id="feature1text">Feature 1</div>
+            </div>
+            <div class="card features" data-feature="feature2">
+                <img src="features2.png" alt="Features Card 2">
+                <div class="text-container" id="feature2text">Feature 2</div>
+            </div>
+            <div class="card features" data-feature="feature3">
+                <img src="features3.png" alt="Features Card 3">
+                <div class="text-container" id="feature3text">Feature 3</div>
+            </div>
+        </div>
+
+        <!-- Function Cards Row -->
+        <div class="card-row">
+            <div class="card function" data-function="function1">
+                <img src="functions1.png" alt="Function Card 1">
+                <div class="text-container" id="function1text">Function 1</div>
+            </div>
+            <div class="card function" data-function="function2">
+                <img src="functions2.png" alt="Function Card 2">
+                <div class="text-container" id="function2text">Function 2</div>
+            </div>
+            <div class="card function" data-function="function3">
+                <img src="functions3.png" alt="Function Card 3">
+                <div class="text-container" id="function3text">Function 3</div>
+            </div>
+        </div>
+
+        <!-- Notifications -->
+        <div class="notification" id="notification">Try Again</div>
+        <div class="success" id="success">Yes!</div>
+
+        <!-- Congratulations Message -->
+        <div class="congratulations" id="congratulations">
+            <a href="allmodulesfour.html">CONGRATULATIONS!</a>
+        </div>
+    </div>
+
+    <script>
+        let flippedCards = [];
+        let matchedPairs = 0;
+
+        const correctMatches = {
+            feature1: "function3",
+            feature2: "function1",
+            feature3: "function2"
+        };
+
+        const cards = document.querySelectorAll('.card');
+        const notification = document.getElementById('notification');
+        const success = document.getElementById('success');
+        const congratulations = document.getElementById('congratulations');
+
+        cards.forEach(card => {
+            card.addEventListener('click', () => {
+                if (flippedCards.length < 2 && !card.classList.contains('matched')) {
+                    // Prevent selecting multiple feature or function cards in the same round
+                    const isFeature = card.classList.contains('features');
+                    const isFunction = card.classList.contains('function');
+
+                    if (flippedCards.length === 0) {
+                        // First card can be either feature or function
+                        flipCard(card);
+                        flippedCards.push(card);
+                    } else if (flippedCards.length === 1) {
+                        // Second card must be the opposite type
+                        const firstCard = flippedCards[0];
+                        const firstIsFeature = firstCard.classList.contains('features');
+                        const firstIsFunction = firstCard.classList.contains('function');
+
+                        if ((firstIsFeature && isFunction) || (firstIsFunction && isFeature)) {
+                            flipCard(card);
+                            flippedCards.push(card);
+                            setTimeout(checkMatch, 500);
+                        }
+                    }
+                }
+            });
+        });
+
+        function flipCard(card) {
+            const img = card.querySelector('img');
+            const textContainer = card.querySelector('.text-container');
+            img.style.display = 'none';
+            textContainer.style.display = 'block';
+        }
+
+        function checkMatch() {
+            const [card1, card2] = flippedCards;
+            const feature = card1.getAttribute('data-feature') || card2.getAttribute('data-feature');
+            const func = card1.getAttribute('data-function') || card2.getAttribute('data-function');
+
+            if (correctMatches[feature] === func || correctMatches[func] === feature) {
+                card1.classList.add('matched');
+                card2.classList.add('matched');
+                matchedPairs++;
+
+                // Show "Yes!" notification
+                success.style.display = 'block';
+                setTimeout(() => {
+                    success.style.display = 'none';
+                }, 1000);
+
+                if (matchedPairs === 3) {
+                    // Show congratulations message
+                    congratulations.style.display = 'block';
+                }
+            } else {
+                notification.style.display = 'block';
+                setTimeout(() => {
+                    notification.style.display = 'none';
+                    resetCards(card1, card2);
+                }, 1000);
+            }
+
+            flippedCards = [];
+        }
+
+        function resetCards(card1, card2) {
+            const img1 = card1.querySelector('img');
+            const textContainer1 = card1.querySelector('.text-container');
+            const img2 = card2.querySelector('img');
+            const textContainer2 = card2.querySelector('.text-container');
+
+            img1.style.display = 'block';
+            textContainer1.style.display = 'none';
+            img2.style.display = 'block';
+            textContainer2.style.display = 'none';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gen AI Selection</title>
+    <style>
+        body {
+            background-color: #100f0f;
+            color: #f8f8f8;
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            width: 960px;
+            height: 540px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+
+        .image-grid {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+
+        .image-placeholder {
+            width: 200px;
+            height: 200px;
+            border: 1px solid #f8f8f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .checkbox-container {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+
+        .checkbox-container input[type="checkbox"] {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+
+        .checkbox-container label {
+            position: relative;
+            cursor: pointer;
+            padding-left: 35px;
+            font-size: 22px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .checkbox-container label:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 25px;
+            height: 25px;
+            border: 2px solid #f8f8f8;
+            border-radius: 50%;
+        }
+
+        .checkbox-container input:checked ~ label:before {
+            background-color: #f8f8f8;
+        }
+
+        button {
+            background-color: transparent;
+            color: #f8f8f8;
+            border: 1px solid #f8f8f8;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        #newContent {
+            display: none;
+            text-align: center;
+        }
+
+        .new-image-container {
+            display: inline-block;
+            margin: 50px 100px; /* Increased horizontal margin */
+            text-align: center;
+        }
+
+        .new-image-placeholder {
+            width: 200px;
+            height: 300px;
+            border: 1px solid #f8f8f8;
+            margin-bottom: 10px;
+        }
+
+        .new-text {
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="originalContent">
+            <h1>select all that is Gen AI<br>(one chance only)</h1>
+            <div class="image-grid">
+                <div class="image-placeholder"></div>
+                <div class="image-placeholder"></div>
+                <div class="image-placeholder"></div>
+            </div>
+            <div class="checkbox-container">
+                <div>
+                    <input type="checkbox" id="checkbox1" name="image1">
+                    <label for="checkbox1"></label>
+                </div>
+                <div>
+                    <input type="checkbox" id="checkbox2" name="image2">
+                    <label for="checkbox2"></label>
+                </div>
+                <div>
+                    <input type="checkbox" id="checkbox3" name="image3">
+                    <label for="checkbox3"></label>
+                </div>
+            </div>
+            <button id="submitButton">submit</button>
+        </div>
+
+        <div id="newContent">
+            <div class="new-image-container">
+                <div class="new-image-placeholder"></div>
+                <div class="new-text">AI mistake</div>
+            </div>
+            <div class="new-image-container">
+                <div class="new-image-placeholder"></div>
+                <div class="new-text">AI mistake</div>
+            </div>
+            <a href="end.html" class="start-button">
+                <div class="new-text">it's in the details</div>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('submitButton').addEventListener('click', function() {
+            // Add your logic here to check the checkboxes
+            // and determine if the user has selected the correct images.
+
+            // Example:
+            const checkbox1 = document.getElementById('checkbox1').checked;
+            const checkbox2 = document.getElementById('checkbox2').checked;
+            const checkbox3 = document.getElementById('checkbox3').checked;
+
+            console.log("Checkbox 1:", checkbox1);
+            console.log("Checkbox 2:", checkbox2);
+            console.log("Checkbox 3:", checkbox3);
+
+            // Transition to the new layout
+            document.getElementById('originalContent').style.display = 'none';
+            document.getElementById('newContent').style.display = 'block';
+        });
+    </script>
+</body>
+</html>

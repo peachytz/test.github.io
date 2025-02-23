@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mystery 2</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&display=swap');
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #333333;
+            margin-top: -20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .container {
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .prompt {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .prompt:hover {
+            background-color: #f0f0f0;
+        }
+
+        .prompt label {
+            flex-grow: 1;
+            font-size: 1rem;
+            font-weight: 400;
+            color: #555555;
+            margin-left: 10px;
+        }
+
+        .rank-input {
+            width: 40px;
+            padding: 5px;
+            text-align: center;
+            border: 2px solid #cccccc;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #333333;
+            transition: border-color 0.3s ease;
+        }
+
+        .rank-input:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        .submit-button {
+            display: block;
+            width: 100%;
+            text-align: center;
+            font-size: 1rem;
+            font-weight: 700;
+            color: rgba(0, 0, 0, 0.5);
+            text-decoration: none;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: color 0.3s ease;
+        }
+
+        .submit-button:hover {
+            color: rgba(0, 0, 0, 0.8);
+            text-decoration: underline;
+        }
+
+        .error {
+            border-color: #dc3545 !important;
+        }
+
+        .explanation {
+            font-size: 0.9rem;
+            color: #666666;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .correct-answer {
+            background-color: #d4edda;
+            border-color: #28a745;
+        }
+
+        .correct-answer .rank-input {
+            border-color: #28a745;
+            background-color: #d4edda;
+        }
+
+        .feedback {
+            font-size: 1rem;
+            color: #333333;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f8f8f8;
+            border-radius: 5px;
+        }
+
+        #correct-ranking {
+            scroll-margin-top: 20px; /* Ensures the section is not hidden behind fixed headers */
+        }
+
+        .got-it {
+            display: block;
+            width: 100%;
+            text-align: center;
+            font-size: 1rem;
+            font-weight: 700;
+            color: rgba(0, 0, 0, 0.5);
+            text-decoration: none;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: color 0.3s ease;
+        }
+
+        .got-it:hover {
+            color: rgba(0, 0, 0, 0.8);
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>MYSTERY 2</h1>
+        <p class="explanation">Rank the following prompts from 1 to 5 (1 being the best and 5 being the worst).</p>
+        
+        <form id="rankingForm">
+            <div class="prompt" data-prompt="prompt1">
+                <input type="text" class="rank-input" maxlength="1">
+                <label>
+                    As an environmental scientist, write a 300-word summary for a 12-year-old explaining how climate change is causing rising sea levels in coastal cities and what solutions can help.
+                </label>
+            </div>
+            <div class="prompt" data-prompt="prompt2">
+                <input type="text" class="rank-input" maxlength="1">
+                <label>
+                    Tell me about climate change.
+                </label>
+            </div>
+            <div class="prompt" data-prompt="prompt3">
+                <input type="text" class="rank-input" maxlength="1">
+                <label>
+                    Explain how climate change affects cities.
+                </label>
+            </div>
+            <div class="prompt" data-prompt="prompt4">
+                <input type="text" class="rank-input" maxlength="1">
+                <label>
+                    Describe how climate change affects major cities around the world and how governments are responding.
+                </label>
+            </div>
+            <div class="prompt" data-prompt="prompt5">
+                <input type="text" class="rank-input" maxlength="1">
+                <label>
+                    As an environmental scientist, explain in simple terms how climate change is affecting coastal cities and what policies can help.
+                </label>
+            </div>
+            
+            <div class="submit-button" id="submit-button">Submit</div>
+        </form>
+
+        <div class="feedback" id="feedback" style="display: none;">
+            <p id="correct-ranking"><strong>Correct Ranking:</strong></p>
+            <ol>
+                <li>As an environmental scientist, write a 300-word summary for a 12-year-old explaining how climate change is causing rising sea levels in coastal cities and what solutions can help.</li>
+                <li>As an environmental scientist, explain in simple terms how climate change is affecting coastal cities and what policies can help.</li>
+                <li>Describe how climate change affects major cities around the world and how governments are responding.</li>
+                <li>Explain how climate change affects cities.</li>
+                <li>Tell me about climate change.</li>
+            </ol>
+            <p><strong>Why is the best answer ranked #1?</strong></p>
+            <p>The best answer includes all components of the <strong>PTACF (Persona, Task, Audience, Context, Format)</strong> method:</p>
+            <ul>
+                <li><strong>Persona:</strong> Environmental scientist.</li>
+                <li><strong>Task:</strong> Explain climate change's impact on coastal cities and propose solutions.</li>
+                <li><strong>Audience:</strong> 12-year-old.</li>
+                <li><strong>Context:</strong> Rising sea levels in coastal cities.</li>
+                <li><strong>Format:</strong> 300-word summary.</li>
+            </ul>
+        </div>
+        <!-- "Got it." link -->
+        <a href="allmodulesthree.html" class="got-it">Got it.</a>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('rankingForm');
+            const rankInputs = document.querySelectorAll('.rank-input');
+            const submitButton = document.getElementById('submit-button');
+            const feedback = document.getElementById('feedback');
+            const correctRankingSection = document.getElementById('correct-ranking');
+
+            // Correct ranking
+            const correctRanking = {
+                prompt1: 1,
+                prompt5: 2,
+                prompt4: 3,
+                prompt3: 4,
+                prompt2: 5,
+            };
+
+            // Function to validate input
+            const validateInput = (input) => {
+                const value = input.value;
+
+                // Check if input is not a number
+                if (isNaN(value)) {
+                    alert('Only numbers 1-5.');
+                    input.value = ''; // Clear invalid input
+                    return false;
+                }
+
+                // Check if input is outside 1-5
+                if (value < 1 || value > 5) {
+                    alert('Only numbers 1-5.');
+                    input.value = ''; // Clear invalid input
+                    return false;
+                }
+
+                return true;
+            };
+
+            // Function to check for duplicate ranks
+            const checkForDuplicates = () => {
+                const ranks = [];
+                let hasDuplicates = false;
+
+                rankInputs.forEach(input => {
+                    const value = input.value;
+                    if (value !== '' && ranks.includes(value)) {
+                        hasDuplicates = true;
+                    }
+                    ranks.push(value);
+                });
+
+                if (hasDuplicates) {
+                    alert('No repeats.');
+                    return false;
+                }
+
+                return true;
+            };
+
+            // Event listener for input fields
+            rankInputs.forEach(input => {
+                input.addEventListener('input', () => {
+                    // Allow only numbers 1-5
+                    input.value = input.value.replace(/[^1-5]/g, '');
+
+                    // Validate input
+                    validateInput(input);
+                });
+            });
+
+            // Event listener for submit button
+            submitButton.addEventListener('click', () => {
+                let isValid = true;
+
+                // Validate all inputs
+                rankInputs.forEach(input => {
+                    if (!validateInput(input)) {
+                        isValid = false;
+                    }
+                });
+
+                // Check for duplicates
+                if (!checkForDuplicates()) {
+                    isValid = false;
+                }
+
+                // If all inputs are valid, proceed
+                if (isValid) {
+                    // Change "Submit" to "Answer"
+                    submitButton.textContent = 'Answer';
+
+                    // Highlight the correct answer
+                    const prompts = document.querySelectorAll('.prompt');
+                    prompts.forEach(prompt => {
+                        const promptId = prompt.getAttribute('data-prompt');
+                        if (correctRanking[promptId] === 1) {
+                            prompt.classList.add('correct-answer');
+                        }
+                    });
+
+                    // Show feedback
+                    feedback.style.display = 'block';
+
+                    // Scroll to the "Correct Ranking" section
+                    correctRankingSection.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+
+            // Event listener for "Answer" button
+            submitButton.addEventListener('click', () => {
+                if (submitButton.textContent === 'Answer') {
+                    // Scroll to the "Correct Ranking" section
+                    correctRankingSection.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

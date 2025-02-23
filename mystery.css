@@ -1,0 +1,42 @@
+.locked-mystery {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+.mystery {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    z-index: 4;
+    transition: transform 0.3s ease; /* Smooth scaling effect */
+}
+.top {
+    top: -60px;
+    left: 50%;
+    transform: translateX(-50%) scale(1); /* Add scale(1) as the default */
+    transform-origin: center; /* Ensure scaling happens from the center */
+}
+.mystery.top-left:hover {
+    transform: scale(1.1); /* Scale */
+    transition: transform 0.3s ease;
+}
+.bottom-left {
+    bottom: -80px;
+    left: 20%;
+}
+.bottom-right {
+    bottom: -80px;
+    right: 20%;
+}
+.top-left {
+    top: 20%;
+    left: 0%;
+}
+.top-right {
+    top: 20%;
+    right: 0%;
+}
+img {
+    width: 60%;
+    height: auto;
+}

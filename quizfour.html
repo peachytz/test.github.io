@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mystery 4</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            width: 960px;
+            height: 540px;
+            border: 1px solid #ccc;
+            padding: 20px;
+            text-align: center;
+            background-color: white;
+            font-family: sans-serif;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        p {
+            font-size: 1.2em;
+            margin: 10px 0;
+            color: #666;
+        }
+
+        .slider-container {
+            margin-top: 30px;
+            width: 500px;
+            margin: 30px auto;
+            position: relative;
+        }
+
+        .slider {
+            width: 100%;
+            height: 5px;
+            background-color: #eee;
+            position: relative;
+        }
+
+        .slider-thumb {
+            width: 20px;
+            height: 20px;
+            background-color: #333;
+            border-radius: 50%;
+            position: absolute;
+            top: -7.5px;
+            left: 0;
+            cursor: pointer;
+        }
+
+        .slider-ticks {
+            position: absolute;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .slider-tick {
+            width: 5px;
+            height: 10px;
+            background-color: #999;
+            position: relative;
+            top: -2px;
+        }
+
+        .slider-labels {
+            position: absolute;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8em;
+            margin-top: 15px;
+        }
+
+        .slider-labels span {
+            position: absolute;
+            transform: translateX(-50%);
+            left: 0;
+        }
+
+        .slider-labels span:nth-child(2) {
+            left: 50%;
+        }
+
+        .slider-labels span:nth-child(3) {
+            left: 100%;
+        }
+
+        .explanation {
+            margin-top: 30px;
+            text-align: left;
+            display: none;
+        }
+
+        .got-it {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .got-it a {
+            background-color: #4CAF50; /* Green background */
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>MYSTERY 4</h1>
+        <p>In 2023, NASA released a groundbreaking study proving that global warming has completely stopped, with Earth's average temperatures stabilizing due to increased volcanic activity absorbing excess CO₂. As a result, leading climate scientists now predict a global cooling trend over the next decade.</p>
+        <p>how believable do you find this?</p>
+        <div class="slider-container">
+            <div class="slider">
+                <div class="slider-thumb"></div>
+            </div>
+            <div class="slider-ticks">
+                <div class="slider-tick"></div>
+                <div class="slider-tick"></div>
+                <div class="slider-tick"></div>
+            </div>
+            <div class="slider-labels">
+                <span>not believable</span>
+                <span>somewhat believable</span>
+                <span>very believable</span>
+            </div>
+        </div>
+        <div class="explanation" id="explanation">
+            <p>It sounds authoritative but is completely false because:</p>
+            <ul>
+                <li>❌ NASA never made such a claim.</li>
+                <li>❌ Volcanic activity does not absorb CO₂ at a scale that counteracts global warming.</li>
+                <li>❌ No scientific consensus predicts a global cooling trend.</li>
+            </ul>
+            <div class="got-it">
+                <a href="allmodulesfive.html">Got it.</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const sliderThumb = document.querySelector('.slider-thumb');
+        const slider = document.querySelector('.slider');
+        const sliderTicks = document.querySelectorAll('.slider-tick');
+        const explanation = document.getElementById('explanation');
+    
+        let isDragging = false;
+        let startX;
+        let thumbLeft;
+    
+        sliderThumb.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            startX = e.clientX;
+            thumbLeft = parseInt(window.getComputedStyle(sliderThumb).left) || 0;
+        });
+    
+        document.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            const deltaX = e.clientX - startX;
+            let newLeft = thumbLeft + deltaX;
+            const maxLeft = slider.offsetWidth - sliderThumb.offsetWidth;
+            if (newLeft < 0) newLeft = 0;
+            if (newLeft > maxLeft) newLeft = maxLeft;
+            sliderThumb.style.left = newLeft + 'px';
+        });
+    
+        document.addEventListener('mouseup', () => {
+            if (!isDragging) return;
+            isDragging = false;
+            const tickWidth = slider.offsetWidth / (sliderTicks.length - 1);
+            const closestTick = Math.round(parseInt(sliderThumb.style.left) / tickWidth);
+            const thumbRadius = sliderThumb.offsetWidth / 2;
+            sliderThumb.style.left = (closestTick * tickWidth - thumbRadius) + 'px';
+            explanation.style.display = 'block';
+        });
+    
+        slider.addEventListener('click', (e) => {
+            const rect = slider.getBoundingClientRect();
+            const clickX = e.clientX - rect.left;
+            const tickWidth = slider.offsetWidth / (sliderTicks.length - 1);
+            const closestTick = Math.round(clickX / tickWidth);
+            const thumbRadius = sliderThumb.offsetWidth / 2;
+            sliderThumb.style.left = (closestTick * tickWidth - thumbRadius) + 'px';
+            explanation.style.display = 'block';
+        });
+    </script>
+</body>
+</html>

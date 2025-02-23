@@ -1,0 +1,7 @@
+body {
+    transform: scale(0.5); /* Scale down to 50% */
+    transform-origin: top left; /* Ensure scaling starts from the top-left corner */
+    width: 1920px; /* Original width (960px * 2) */
+    height: 1080px; /* Original height (540px * 2) */
+    overflow: hidden; /* Hide overflow */
+}
